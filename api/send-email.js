@@ -56,27 +56,28 @@
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
-  // ✅ ALWAYS allow origin (no credentials used)
+  // ✅ CORS — simple & safe for public contact form
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // Preflight
+  // ✅ IMPORTANT: STOP HERE FOR PREFLIGHT
   if (req.method === "OPTIONS") {
-    return res.status(204).end();
+    return res.status(200).end();
   }
 
+  // Only POST allowed
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  const { name, email, message } = req.body;
-
-  if (!name || !email || !message) {
-    return res.status(400).json({ message: "Missing fields" });
-  }
-
   try {
+    const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ message: "Missing fields" });
+    }
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -99,7 +100,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ message: "Email sent successfully" });
   } catch (err) {
-    console.error("Email error:", err);
+    console.error("EMAIL ERROR:", err);
     return res.status(500).json({ message: "Failed to send email" });
   }
 }
