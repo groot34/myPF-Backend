@@ -10,11 +10,17 @@ const PORT = process.env.PORT || 5000;
 
 // Configure CORS
 const corsOptions = {
-  origin: [process.env.FRONTEND_URL,'http://localhost:5173'], // Add your frontend domain here
+  origin: [
+    process.env.FRONTEND_URL,
+    'http://localhost:5173',
+    'https://theatharva.me',
+    'https://www.theatharva.me',
+    'https://atharvx.vercel.app'
+  ], 
   methods: ['GET', 'POST', 'OPTIONS'],
   //allowedHeaders: ['Content-Type', 'Authorization'],
-  // credentials: true,
-  // optionsSuccessStatus: 204
+  credentials: true,
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
