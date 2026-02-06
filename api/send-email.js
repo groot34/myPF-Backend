@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 
+
 const sendEmailHandler = async (req, res) => {
   // Allowed origins
   const allowedOrigins = [
@@ -64,6 +65,9 @@ const sendEmailHandler = async (req, res) => {
 };
 
 module.exports = sendEmailHandler;
+
+
+
 
 
 // import nodemailer from "nodemailer";
